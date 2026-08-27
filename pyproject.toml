@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "child-safety"
+version = "1.0.0"
+description = "KIDBench: benchmarking child safety in large language models"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Samee Arif" },
+    { name = "Angana Borah" },
+    { name = "Rada Mihalcea" },
+]
+dependencies = [
+    "transformers>=4.50.0",
+    "huggingface_hub[cli]>=0.25.0",
+    "accelerate>=0.26.0",
+    "tqdm",
+    "openai>=1.0.0",
+    "anthropic>=0.25.0",
+    "google-genai>=1.0.0",
+    "numpy>=1.24.0",
+    "pandas>=2.0.0",
+    "scipy>=1.11.0",
+    "scikit-learn>=1.3.0",
+    "statsmodels>=0.14.0",
+    "matplotlib>=3.8.0",
+    "datasets>=2.19.0",
+    "pyarrow>=14.0.0",
+]
+
+[project.optional-dependencies]
+# Local inference for open-weight models. Needs a CUDA GPU.
+serve = ["vllm>=0.6.0"]
+# LoRA fine-tuning of KIDLlama and KIDGuardLlama. Needs a CUDA GPU.
+train = ["unsloth", "trl>=0.12.0", "peft>=0.11.0", "wandb"]
+
+[project.urls]
+Paper = "https://arxiv.org/abs/2605.25510"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+child_safety = ["py.typed"]

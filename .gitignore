@@ -193,6 +193,28 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
+# --- Project-specific ---
+# Secrets
 .env
+
+# Local virtualenvs
 env/
+venv/
+
+# Training outputs (checkpoints and logs are large; publish to the Hub instead)
+finetuned_models/
+finetuning_logs/
+
+# Derived GRPO dataset (rebuild with scripts/dataset/build_grpo_dataset.sh)
+dataset/gold/grpo_train.parquet
+
+# Derived judge training set — 267 MB, over GitHub's 100 MB file limit.
+# Rebuild deterministically with scripts/dataset/build_judge_dataset.sh
+# (inputs: evaluations/ and gold_responses/, both committed; seed 42).
+dataset/judge/train.jsonl
+
+# Downloaded model weights
+models/
+
+# macOS
 .DS_Store
