@@ -19,7 +19,8 @@ GPU_MEMORY_UTILIZATION=0.90
 
 # KIDLlama checkpoints to evaluate.
 MODELS=(
-    "sameearif/LlamaPlushie-3-8B-GRPO"
+    "sameearif/KIDLlama-GRPO"
+    # "sameearif/KIDLlama-SFT-Epoch-2"
 )
 
 for MODEL in "${MODELS[@]}"; do

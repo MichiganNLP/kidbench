@@ -26,7 +26,7 @@ TRAIN_PATH="${ROOT_DIR}/dataset/judge/train.jsonl"
 OUTPUT_DIR="${ROOT_DIR}/finetuned_models/judge"
 LOG_DIR="${ROOT_DIR}/finetuning_logs/judge"
 # Destination for the per-epoch checkpoints — change this to your own namespace.
-HF_REPO="${HF_REPO:-sameearif/LlamaSproutGuard-3-8B}"
+HF_REPO="${HF_REPO:-sameearif/KIDGuardLlama-SFT-Epoch}"
 
 # LoRA
 LORA_R=16

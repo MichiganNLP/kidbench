@@ -27,9 +27,9 @@ VERL_DIR="${ROOT_DIR}/critique-grpo/verl"
 : "${HF_TOKEN:?Set HF_TOKEN in your environment (see .env.example)}"
 
 # Policy: the selected KIDLlama SFT checkpoint.
-POLICY_MODEL="${POLICY_MODEL:-sameearif/LlamaPlushie-3-8B-2}"
+POLICY_MODEL="${POLICY_MODEL:-sameearif/KIDLlama-SFT-Epoch-2}"
 # Reward model: the selected KIDGuardLlama checkpoint.
-JUDGE_PATH="${JUDGE_PATH:-sameearif/LlamaSproutGuard-3-8B-2}"
+JUDGE_PATH="${JUDGE_PATH:-sameearif/KIDGuardLlama-SFT-Epoch-2}"
 TRAIN_PARQUET="${ROOT_DIR}/dataset/gold/grpo_train.parquet"
 
 JUDGE_PORT=8001
@@ -63,7 +63,7 @@ else
     TRAIN_BATCH_SIZE=8
     PPO_MINI_BATCH=8
 fi
-HUB_REPO="${HUB_REPO:-sameearif/LlamaPlushie-3-8B-GRPO}"
+HUB_REPO="${HUB_REPO:-sameearif/KIDLlama-GRPO}"
 
 echo "============================================================"
 echo "Policy:  ${POLICY_MODEL}"

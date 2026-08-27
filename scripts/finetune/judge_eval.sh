@@ -26,8 +26,8 @@ MAX_NEW_TOKENS=512
 HF_NAMESPACE="${HF_NAMESPACE:-sameearif}"
 
 for VERSION in 1 2 3; do
-    MODEL_NAME="LlamaSproutGuard-3-8B-${VERSION}"
-    MODEL_PATH="${HF_NAMESPACE}/LlamaSproutGuard-3-8B-${VERSION}"
+    MODEL_NAME="KIDGuardLlama-SFT-Epoch-${VERSION}"
+    MODEL_PATH="${HF_NAMESPACE}/KIDGuardLlama-SFT-Epoch-${VERSION}"
 
     echo "============================================================"
     echo "Model:   ${MODEL_PATH}"

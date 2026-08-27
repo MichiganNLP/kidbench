@@ -10,6 +10,8 @@ dataset/
 
 Only `kidbench/` and `raw/` are source data. Everything in `gold/` and `judge/` is regenerated from `gold_responses/` and `evaluations/` by the scripts in `scripts/dataset/`.
 
+The benchmark is also published on the Hub as [`sameearif/KIDBench`](https://huggingface.co/datasets/sameearif/KIDBench), with `single_agent` (2,000 rows) and `multi_agent` (100 rows) subsets. That copy is a flattened mirror with a stable `id` per item — identical content, convenient for `load_dataset`. The code in this repository reads the JSON files below instead, because it needs the nested `{language: {category: [...]}}` structure.
+
 ---
 
 ## `kidbench/`

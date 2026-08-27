@@ -40,7 +40,7 @@ declare -A MODEL_PATHS=(
 )
 
 # Fine-tuned checkpoints can be listed here too, e.g.
-#   ["llamaplushie-3-8b-grpo"]="sameearif/LlamaPlushie-3-8B-GRPO"
+#   ["kidllama-grpo"]="sameearif/KIDLlama-GRPO"
 # though scripts/finetune/kidllama_eval.sh is the usual path for those.
 
 # Text-only checkpoints of multimodal architectures need --language_model_only.

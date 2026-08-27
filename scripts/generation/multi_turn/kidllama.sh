@@ -28,7 +28,7 @@ NUM_TURNS=5
 
 # KIDLlama checkpoints. Update these to your own repos if you retrain.
 MODELS=(
-    "sameearif/LlamaPlushie-3-8B-GRPO"
+    "sameearif/KIDLlama-GRPO"
 )
 
 for MODEL in "${MODELS[@]}"; do

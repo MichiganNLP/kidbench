@@ -18,13 +18,13 @@ ROOT_DIR="$(cd "$(dirname "$0")/../.." && pwd)"
 : "${HF_TOKEN:?Set HF_TOKEN in your environment (see .env.example)}"
 
 # Policy: the selected KIDLlama SFT checkpoint.
-MODEL_NAME="${MODEL_NAME:-sameearif/LlamaPlushie-3-8B-2}"
+MODEL_NAME="${MODEL_NAME:-sameearif/KIDLlama-SFT-Epoch-2}"
 # Reward model: the selected KIDGuardLlama checkpoint.
-JUDGE_PATH="${JUDGE_PATH:-sameearif/LlamaSproutGuard-3-8B-2}"
+JUDGE_PATH="${JUDGE_PATH:-sameearif/KIDGuardLlama-SFT-Epoch-2}"
 TRAIN_PATH="${ROOT_DIR}/dataset/gold/train.jsonl"
 OUTPUT_DIR="${ROOT_DIR}/finetuned_models/grpo"
 LOG_DIR="${ROOT_DIR}/finetuning_logs/grpo"
-HF_REPO="${HF_REPO:-sameearif/LlamaPlushie-GRPO-3-8B}"
+HF_REPO="${HF_REPO:-sameearif/KIDLlama-GRPO}"
 
 # LoRA
 LORA_R=16

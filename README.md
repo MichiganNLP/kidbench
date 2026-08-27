@@ -2,11 +2,44 @@
 
 Code, data, and results for **"The Age of Curiosity Meets the Age of AI: Benchmarking Child Safety in Large Language Models."**
 
-📄 [Paper (arXiv:2605.25510)](https://arxiv.org/abs/2605.25510)
+📄 [Paper (arXiv:2605.25510)](https://arxiv.org/abs/2605.25510) &nbsp;·&nbsp; 🤗 [KIDBench collection](https://huggingface.co/collections/sameearif/kidbench) — dataset and all model checkpoints
 
 Children increasingly talk to LLMs, but most safety evaluation is adult-facing and stops at harmful-content avoidance. A medically accurate answer to *"How are babies made?"* can still be wrong for a nine-year-old if it gives adult-level detail instead of a simple, concrete explanation with appropriate boundaries and a pointer to a trusted adult. **KIDBench** (Kid Interaction Dangers Benchmark) evaluates child-facing LLM safety for ages 7–11 as a multidimensional construct, using a rubric grounded in developmental psychology.
 
 The repository covers the full pipeline: the benchmark itself, response generation across 13 models, LLM-as-a-Judge evaluation, statistical analysis, and the training of two child-safety models — **KIDGuardLlama** (a guard/evaluator model) and **KIDLlama** (a child-oriented response model).
+
+## Released artifacts
+
+Everything is published in the [**KIDBench collection**](https://huggingface.co/collections/sameearif/kidbench) on the Hugging Face Hub.
+
+| Artifact | Description |
+|---|---|
+| [`sameearif/KIDBench`](https://huggingface.co/datasets/sameearif/KIDBench) | The benchmark — `single_agent` (2,000 rows) and `multi_agent` (100 rows) subsets |
+| [`sameearif/KIDLlama-GRPO`](https://huggingface.co/sameearif/KIDLlama-GRPO) | **KIDLlama** — the final child-safe response model (SFT + Critique-GRPO) |
+| [`sameearif/KIDLlama-SFT-Epoch-{1,2,3}`](https://huggingface.co/sameearif/KIDLlama-SFT-Epoch-2) | KIDLlama SFT checkpoints; epoch 2 initializes Critique-GRPO |
+| [`sameearif/KIDGuardLlama-SFT-Epoch-{1,2,3}`](https://huggingface.co/sameearif/KIDGuardLlama-SFT-Epoch-2) | **KIDGuardLlama** — the guard model; epoch 2 is the selected checkpoint |
+
+All models are 8B, LoRA-tuned from Llama-3.1-8B-Instruct and released as merged bfloat16 checkpoints, so they load directly with vLLM or `transformers`:
+
+```python
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+model = AutoModelForCausalLM.from_pretrained("sameearif/KIDLlama-GRPO")
+tokenizer = AutoTokenizer.from_pretrained("sameearif/KIDLlama-GRPO")
+```
+
+The Hub dataset is a flattened mirror of `dataset/kidbench/` in this repository, with a stable `id` per item:
+
+```python
+from datasets import load_dataset
+
+single = load_dataset("sameearif/KIDBench", "single_agent")["train"]   # id, language, category,
+                                                                       # example_index, without_cues, with_cues
+multi  = load_dataset("sameearif/KIDBench", "multi_agent")["train"]    # id, category, example_index,
+                                                                       # scenario, child_goal
+```
+
+`with_cues` is `null` for the non-English rows — only the `without_cues` prompts were translated. The pipeline in this repository reads the JSON files in `dataset/kidbench/` rather than the Hub copy; the two carry identical content.
 
 ---
 
@@ -241,7 +274,7 @@ bash scripts/finetune/judge_sft.sh     # 3 epochs, one checkpoint pushed per epo
 bash scripts/finetune/judge_eval.sh    # agreement with DeepSeek on the held-out test set
 ```
 
-The paper selects epoch 2: Spearman ρ = 0.8514, QWK = 0.8722, exact accuracy = 0.7971, within-1 accuracy = 0.9607.
+The paper selects epoch 2: Spearman ρ = 0.8514, QWK = 0.8722, exact accuracy = 0.7971, within-1 accuracy = 0.9607. All three epoch checkpoints are on the Hub as [`KIDGuardLlama-SFT-Epoch-{1,2,3}`](https://huggingface.co/sameearif/KIDGuardLlama-SFT-Epoch-2), so you can skip this stage and pull the trained guard directly.
 
 **KIDLlama** — a Llama-3.1-8B response model trained in two stages:
 
@@ -251,7 +284,7 @@ bash scripts/dataset/build_grpo_dataset.sh     # convert train.jsonl → VERL pa
 bash scripts/finetune/kidllama_grpo_verl.sh    # stage 2: Critique-GRPO (paper configuration)
 ```
 
-Stage 2 initializes from the epoch-2 SFT checkpoint. During Critique-GRPO, KIDGuardLlama scores each generated response, and its `improvement` critique guides a revision that is scored again and folded into the group-normalized advantage. The VERL script serves the guard model with vLLM as an OpenAI-compatible reward server and adapts its GPU layout automatically (1, 2, or 4 GPUs).
+Stage 2 initializes from the epoch-2 SFT checkpoint ([`KIDLlama-SFT-Epoch-2`](https://huggingface.co/sameearif/KIDLlama-SFT-Epoch-2)), and the finished model is released as [`KIDLlama-GRPO`](https://huggingface.co/sameearif/KIDLlama-GRPO). During Critique-GRPO, KIDGuardLlama scores each generated response, and its `improvement` critique guides a revision that is scored again and folded into the group-normalized advantage. The VERL script serves the guard model with vLLM as an OpenAI-compatible reward server and adapts its GPU layout automatically (1, 2, or 4 GPUs).
 
 A simpler single-GPU implementation built directly on Unsloth is available as `scripts/finetune/kidllama_grpo_unsloth.sh`. It is easier to read and modify but considerably slower.
 
@@ -342,13 +375,15 @@ Pre-computed results for all 13 models are committed to this repository:
 
 `evaluations/human_eval/` contains the raw annotation sheets: overall preference over 90 examples from 3 annotators (`ft_model/`), cultural-alignment preference over 50 examples per country from 3 country-matched annotators (`cultural/`), translation-quality scores per language (`language/`), and child-likeness scores for 100 actor-generated messages (`child_questions/`).
 
-The fine-tuned model directories under `responses/` and `evaluations/` use the internal checkpoint names:
+The fine-tuned model directories under `responses/` and `evaluations/` predate the final naming, and are kept as-is so the committed results stay addressable:
 
-| Directory | Paper name |
-|---|---|
-| `llamaplushie-3-8b-sft-{1,2,3}` | KIDLlama SFT, epochs 1–3 |
-| `llamaplushie-3-8b-grpo` | KIDLlama (Critique-GRPO) |
-| `llamaplushiegaurd-3-8b-{1,2,3}` | KIDGuardLlama, epochs 1–3 |
+| Result directory | Paper name | Hugging Face repo |
+|---|---|---|
+| `llamaplushie-3-8b-sft-{1,2,3}` | KIDLlama SFT, epochs 1–3 | [`KIDLlama-SFT-Epoch-{1,2,3}`](https://huggingface.co/sameearif/KIDLlama-SFT-Epoch-2) |
+| `llamaplushie-3-8b-grpo` | KIDLlama (Critique-GRPO) | [`KIDLlama-GRPO`](https://huggingface.co/sameearif/KIDLlama-GRPO) |
+| `llamaplushiegaurd-3-8b-{1,2,3}` | KIDGuardLlama, epochs 1–3 | [`KIDGuardLlama-SFT-Epoch-{1,2,3}`](https://huggingface.co/sameearif/KIDGuardLlama-SFT-Epoch-2) |
+
+The scripts in `scripts/finetune/` point at the Hub repos above.
 
 ---
 

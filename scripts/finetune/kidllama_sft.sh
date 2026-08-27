@@ -25,7 +25,7 @@ TRAIN_PATH="${ROOT_DIR}/dataset/gold/train.jsonl"
 OUTPUT_DIR="${ROOT_DIR}/finetuned_models/gold"
 LOG_DIR="${ROOT_DIR}/finetuning_logs/gold"
 # Destination for the per-epoch checkpoints — change this to your own namespace.
-HF_REPO="${HF_REPO:-sameearif/LlamaPlushie-3-8B}"
+HF_REPO="${HF_REPO:-sameearif/KIDLlama-SFT-Epoch}"
 
 # LoRA
 LORA_R=16

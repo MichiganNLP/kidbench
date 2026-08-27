@@ -20,6 +20,12 @@ The paper's Critique-GRPO run uses the VERL backend driven by `scripts/finetune/
 
 > The module names use the internal terms *gold* (the teacher responses KIDLlama is trained on) and *judge* (KIDGuardLlama). Output directories under `responses/` and `evaluations/` use the original checkpoint names — see the mapping table in the top-level README.
 
+Trained checkpoints are on the Hub, so both training stages can be skipped:
+[`KIDLlama-GRPO`](https://huggingface.co/sameearif/KIDLlama-GRPO),
+[`KIDLlama-SFT-Epoch-{1,2,3}`](https://huggingface.co/sameearif/KIDLlama-SFT-Epoch-2),
+[`KIDGuardLlama-SFT-Epoch-{1,2,3}`](https://huggingface.co/sameearif/KIDGuardLlama-SFT-Epoch-2)
+— all in the [KIDBench collection](https://huggingface.co/collections/sameearif/kidbench).
+
 ---
 
 ## Dataset construction
