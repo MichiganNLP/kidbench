@@ -2,7 +2,7 @@
 
 Code, data, and results for **"The Age of Curiosity Meets the Age of AI: Benchmarking Child Safety in Large Language Models."**
 
-> **Accepted to Findings of the Association for Computational Linguistics: EMNLP 2026** — the Conference on Empirical Methods in Natural Language Processing (Findings of EMNLP 2026).
+> **Accepted to Findings of EMNLP 2026** — the Conference on Empirical Methods in Natural Language Processing.
 
 📄 [Paper (arXiv:2605.25510)](https://arxiv.org/abs/2605.25510) &nbsp;·&nbsp; 🤗 [KIDBench collection](https://huggingface.co/collections/sameearif/kidbench) — dataset and all model checkpoints
 
@@ -401,7 +401,7 @@ KIDGuardLlama and KIDLlama are research artifacts. They must not replace parenta
 
 ## Citation
 
-This work appears in **Findings of the Association for Computational Linguistics: EMNLP 2026** (Findings of EMNLP 2026).
+This work appears in **Findings of EMNLP 2026** (Conference on Empirical Methods in Natural Language Processing).
 
 ```bibtex
 @misc{arif2026agecuriositymeetsage,
@@ -412,11 +412,11 @@ This work appears in **Findings of the Association for Computational Linguistics
       archivePrefix={arXiv},
       primaryClass={cs.CL},
       url={https://arxiv.org/abs/2605.25510},
-      note={Accepted to Findings of the Association for Computational Linguistics: EMNLP 2026},
+      note={Accepted to Findings of EMNLP 2026},
 }
 ```
 
-Once the proceedings are published, replace this with the official ACL Anthology `@inproceedings` entry.
+Once the proceedings are published, replace this with the official `@inproceedings` entry.
 
 Critique-GRPO training uses the implementation from [Zhang et al. (2025)](https://arxiv.org/abs/2506.03106), vendored as the `critique-grpo/` submodule.
 
