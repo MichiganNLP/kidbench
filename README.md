@@ -2,6 +2,8 @@
 
 Code, data, and results for **"The Age of Curiosity Meets the Age of AI: Benchmarking Child Safety in Large Language Models."**
 
+> **Accepted to Findings of the Association for Computational Linguistics: EMNLP 2026** — the Conference on Empirical Methods in Natural Language Processing (Findings of EMNLP 2026).
+
 📄 [Paper (arXiv:2605.25510)](https://arxiv.org/abs/2605.25510) &nbsp;·&nbsp; 🤗 [KIDBench collection](https://huggingface.co/collections/sameearif/kidbench) — dataset and all model checkpoints
 
 Children increasingly talk to LLMs, but most safety evaluation is adult-facing and stops at harmful-content avoidance. A medically accurate answer to *"How are babies made?"* can still be wrong for a nine-year-old if it gives adult-level detail instead of a simple, concrete explanation with appropriate boundaries and a pointer to a trusted adult. **KIDBench** (Kid Interaction Dangers Benchmark) evaluates child-facing LLM safety for ages 7–11 as a multidimensional construct, using a rubric grounded in developmental psychology.
@@ -399,6 +401,8 @@ KIDGuardLlama and KIDLlama are research artifacts. They must not replace parenta
 
 ## Citation
 
+This work appears in **Findings of the Association for Computational Linguistics: EMNLP 2026** (Findings of EMNLP 2026).
+
 ```bibtex
 @misc{arif2026agecuriositymeetsage,
       title={The Age of Curiosity Meets the Age of AI: Benchmarking Child Safety in Large Language Models},
@@ -408,8 +412,11 @@ KIDGuardLlama and KIDLlama are research artifacts. They must not replace parenta
       archivePrefix={arXiv},
       primaryClass={cs.CL},
       url={https://arxiv.org/abs/2605.25510},
+      note={Accepted to Findings of the Association for Computational Linguistics: EMNLP 2026},
 }
 ```
+
+Once the proceedings are published, replace this with the official ACL Anthology `@inproceedings` entry.
 
 Critique-GRPO training uses the implementation from [Zhang et al. (2025)](https://arxiv.org/abs/2506.03106), vendored as the `critique-grpo/` submodule.
 
